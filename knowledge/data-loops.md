@@ -6,7 +6,7 @@ updated without touching the model.
 
 | Loop | For | How |
 |---|---|---|
-| **BAIT** (default, IMR) | IMR Biotic data | `R/data_loop_bait.R` reads the local BioticExplorer DuckDB (BAIT skills `biotic-connect`, `biotic-query`, `biotic-survey-analysis`). Landings from official statistics; survey indices from index-wise |
+| **BAIT** (default, IMR) | IMR Biotic data | `R/data_loop_bait.R` reads the local BioticExplorer DuckDB (BAIT skills `biotic-connect`, `biotic-query`, `biotic-survey-analysis`). Landings from BAIT `catch-data` (Norwegian sales notes) or official statistics; survey indices from index-wise |
 | **mfdb** (default, Icelandic format) | Users with an mfdb database | `mfdb_sample_count()`, `mfdb_sample_totalweight()` with `mfdb_interval()`/`mfdb_group()` and a `defaults` list (area, timestep, year, species) |
 | **custom** | Anything else | Your code writes the contract tables |
 

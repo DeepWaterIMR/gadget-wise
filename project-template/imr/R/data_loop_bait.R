@@ -82,7 +82,7 @@ run_data_loop <- function(model_params, stock_params, fleet_params, out_dir) {
           file.path(out_dir, "life_history.yaml"))
 }
 
-#' Official landings to catches_<Fleet>.csv. Edit for your landings source.
+#' Landings to catches_<Fleet>.csv. BAIT's catch-data skill or official statistics supply landings.csv.
 prepare_catches <- function(model_params, fleet_params, out_dir) {
   src <- file.path("data", "source", "landings.csv") # year, fleet, tonnes
   if (!file.exists(src)) {

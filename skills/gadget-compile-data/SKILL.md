@@ -35,7 +35,7 @@ For each fleet and index, agree with the user (and record in the data report):
 
 - BAIT: fill `BIOTIC_FILTERS` (one entry per fleet), set `MODEL$BIOTIC_SPECIES` (Norwegian common
   name, verified against `aphia`), adapt the maturity mapping and raising; landings go through
-  `prepare_catches()` (official statistics in `data/source/landings.csv`) and indices through
+  `prepare_catches()` (`data/source/landings.csv` from BAIT `catch-data` or official statistics) and indices through
   `prepare_index()` (index-wise `assessment-index.rds` in `data/source/`).
 - custom: write the tables from your files.
 - Run with `reload_data <- TRUE` in `_RUN_THE_MODEL.R` (or `source("02-0_data_loop.R")` after `01_settings.R`).
