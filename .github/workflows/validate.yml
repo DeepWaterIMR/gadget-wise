@@ -23,6 +23,7 @@ jobs:
             any::jsonlite
             any::tidyverse
             any::TMB
+            any::RcppEigen
             any::cowplot
             any::pbapply
             any::remotes
