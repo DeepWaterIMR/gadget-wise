@@ -1,0 +1,4 @@
+
+# --- gadget-wise: gadget3 caches ---
+gadget3_tmb_work_dir/
+gadget3_r_work_dir/

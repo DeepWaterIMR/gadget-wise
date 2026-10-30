@@ -1,0 +1,36 @@
+<!-- Diagnostics: convergence, residuals, jitter, retro, leave-out, profiles. Reads params$model_dir -->
+
+## Diagnostics
+
+```{r}
+#| label: gadget-diag-setup
+#| include: false
+model_dir <- here::here(params$model_dir)
+load(file.path(model_dir, "optim/Optimized TMB model fit.rda"))
+load(file.path(model_dir, "optim/Optimized TMB parameters.rda"))
+opt <- attributes(optim_param)$summary
+```
+
+The optimisation `r if (isTRUE(opt$convergence)) "converged" else "did not converge"` after `r opt$gd_calls` gradient calls, with an objective function value of `r round(opt$score, 2)`.
+
+```{r}
+#| label: fig-gadget-indices
+#| fig-cap: "Observed (points) and modelled (lines) survey indices."
+gadgetplots::plot_si(optim_fit)
+```
+
+```{r}
+#| label: fig-gadget-ldist
+#| fig-cap: "Length-distribution residuals by fleet."
+gadgetplots::plot_resid(optim_fit)
+```
+
+```{r}
+#| label: fig-gadget-retro
+#| fig-cap: "Retrospective analysis. Mohn's rho in the caption table."
+#| eval: !expr file.exists(file.path(model_dir, "retro/Retro parameters and fit.rda"))
+load(file.path(model_dir, "retro/Retro parameters and fit.rda"))
+gadgetplots::plot_retro(lapply(retro_list, function(k) k$fit))
+```
+
+<!-- Report: parameters at bounds, jitter nll spread, Mohn's rho of SSB, F and recruitment against the ICES rule of thumb (−0.15–0.20 for long-lived stocks), leave-out effects, likelihood profiles. -->

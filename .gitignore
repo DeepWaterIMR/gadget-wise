@@ -1,0 +1,68 @@
+# gadget-wise holds INSTRUCTIONS ONLY — never data. These rules are a safety net so that
+# catch series, index files, gadget model runs, and model output can never be committed by accident. Do not
+# loosen them.
+
+# --- Raw or intermediate data of any kind ---
+*.rds
+*.rda
+*.RData
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+
+# --- Working directories where data or outputs might land. Anchored to the repository root
+#     so the project-template/ skeleton is still committed. ---
+/data/
+/output/
+/outputs/
+/results/
+/private/
+/scratch/
+/logs/
+/review/
+
+# --- Rendered figures and documents ---
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.pdf
+*.html
+*.docx
+/*_files/
+**/*_files/
+
+# --- Word reference documents and Lua filters are content, not output: they come from
+#     wise-writing and are copied at scaffold time, so none is tracked here. ---
+
+# --- R / RStudio ---
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# --- Quarto ---
+/_site/
+/.quarto/
+*.quarto_ipynb
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- gadget3 caches and model runs ---
+gadget3_tmb_work_dir/
+gadget3_r_work_dir/
+/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_model*/

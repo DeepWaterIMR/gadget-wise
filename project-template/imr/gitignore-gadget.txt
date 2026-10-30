@@ -1,0 +1,7 @@
+
+# --- gadget-wise: model runs and gadget3 caches ---
+/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_model*/
+gadget3_tmb_work_dir/
+gadget3_r_work_dir/
+old_models/
+model_files_tests/

@@ -1,0 +1,21 @@
+<!-- Reference points and short-term projections. Reads params$model_dir -->
+
+## Reference points
+
+```{r}
+#| label: gadget-rp-setup
+#| include: false
+model_dir <- here::here(params$model_dir)
+rp_file <- file.path(model_dir, "long_term_projections/reference_points.rda")
+has_rp <- file.exists(rp_file)
+if (has_rp) load(rp_file)
+```
+
+```{r}
+#| label: tbl-gadget-refpoints
+#| tbl-cap: "Reference points on the model's scale."
+#| eval: !expr has_rp
+ref_points |> knitr::kable(digits = 3)
+```
+
+<!-- State the ICES stock type and the basis of Blim, the projection settings (recruitment bootstrap pool and block size, advice error CV and autocorrelation, evaluation years, number of trials), and how HRmsy was capped at HRp0.5. -->

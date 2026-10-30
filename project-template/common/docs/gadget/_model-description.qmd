@@ -1,0 +1,52 @@
+<!-- Model description: structure, stocks, fleets, likelihood. Reads the fitted model in params$model_dir -->
+
+```{r}
+#| label: gadget-setup
+#| include: false
+model_dir <- here::here(params$model_dir)
+load(file.path(model_dir, "data/Model and stock parameters.rda"))
+load(file.path(model_dir, "optim/Optimized TMB model fit.rda"))
+```
+
+## Model structure
+
+The model was built with gadget3 [@gadget3] version `r packageVersion("gadget3")` and fitted with TMB [@tmb]. It covers `r min(model_params$year_range)`–`r max(model_params$year_range)` in `r length(model_params$step_lengths)` time step(s) per year and `r length(areas)` area(s).
+
+### Stocks
+
+```{r}
+#| label: tbl-gadget-stocks
+#| tbl-cap: "Stocks in the model."
+tibble::tibble(
+  Stock = paste0(model_params$species_code, "_", model_params$stock_names),
+  Ages = vapply(model_params$stock_names, function(k) paste(stock_params[[k]]$minage, stock_params[[k]]$maxage, sep = "–"), character(1)),
+  `Length (cm)` = vapply(model_params$stock_names, function(k) paste(stock_params[[k]]$minlength, stock_params[[k]]$maxlength, sep = "–"), character(1))
+) |> knitr::kable()
+```
+
+<!-- Describe: growth (von Bertalanffy, beta-binomial length update), maturation (length-based ogive, g3a_mature_continuous), natural mortality, recruitment (log-AR(1) process), initial population. State the action order within a time step and what it implies for the timing of the indices and age data (gadget-model skill, references/action-order.md). -->
+
+### Fleets
+
+```{r}
+#| label: tbl-gadget-fleets
+#| tbl-cap: "Fleets and surveys, with their selectivity."
+fleet_params |>
+  dplyr::transmute(Fleet = name, Type = type, Selectivity = dplyr::recode(selectivity, s = "Logistic (length)", dome = "Dome (Andersen)", age_s = "Logistic (age)", full = "Constant"),
+                   `Shares selectivity with` = dplyr::coalesce(shares_selectivity_with, "")) |>
+  knitr::kable()
+```
+
+### Likelihood
+
+```{r}
+#| label: tbl-gadget-likelihood
+#| tbl-cap: "Likelihood components, their weights and their contributions at the optimum."
+optim_fit$likelihood |>
+  dplyr::group_by(component) |>
+  dplyr::summarise(Weight = dplyr::first(weight), `Unweighted nll` = sum(value), .groups = "drop") |>
+  dplyr::rename(Component = component) |>
+  knitr::kable(digits = 3)
+```
+
+<!-- Describe the data weighting: iterative reweighting (Taylor et al. 2007) with the grouping used, cv_floor, and any components set by hand. -->

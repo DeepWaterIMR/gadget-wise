@@ -1,0 +1,65 @@
+# config.yaml — a synthetic two-sub-stock example (no real data).
+#
+# Copy this file, fill it for your stock, and hand it to scaffold_gadget(). The identity fields
+# are stamped into the project when it is created; the MODEL section is read by 01_settings.R on
+# every run, so the model structure is changed by editing this file, not the scripts.
+
+# --- wise-writing identity ---------------------------------------------------------
+PROJECT_TITLE: "gadget3 assessment model of synthetic cod in area 1"
+PROJECT_SLUG: "syn-gadget"
+PROJECT_YEAR: 2026
+
+# Accountable human authors. Never invent these — confirm them with the analyst.
+AUTHORS:
+  - name: "Example Author"
+    email: "author@example.org"
+    affiliation: inst
+
+AFFILIATIONS:
+  - id: inst
+    name: "Example Institute"
+
+LANGUAGE: en-US
+FIG_WIDTH_SINGLE_MM: 85
+FIG_WIDTH_DOUBLE_MM: 170
+
+# --- Stock identity (stamped) ------------------------------------------------------
+STOCK_CODE: "syn"
+STOCK_NAME: "synthetic cod"
+STOCK_SLUG: "synthetic-cod"
+STOCK_LATIN: "Gadus syntheticus"
+ICES_AREAS: "1"
+WORKING_GROUP: "EXWG"
+ASSESSMENT_YEAR: 2026
+ADVICE_YEAR: 2027
+
+# --- gadget-wise -------------------------------------------------------------------
+LAYOUT: imr                 # imr | iceland
+
+# --- Model structure (read at run time by 01_settings.R) ---------------------------
+MODEL:
+  STOCK_PREFIX: "syn"       # Stock and parameter name prefix: syn_imm, syn.Linf
+  YEARS: [1990, 2025]
+  TIMESTEP: yearly          # yearly | quarterly | monthly | months per step, e.g. [3, 3, 6]
+  AREAS: ["1"]
+  LENGTH_BIN: 2             # Model length group width (cm)
+  MAX_LENGTH_GROUP_GROWTH: 15
+  STOCKS:                   # One stock (any name) or two sub-stocks named imm and mat
+    imm: {minage: 1, maxage: 10, minlength: 4, maxlength: 90}
+    mat: {minage: 3, maxage: 12, minlength: 20, maxlength: 120}
+  RECRUITMENT: logar1       # logar1 (log-AR(1) process) | free (one parameter per year)
+  M: {type: constant, value: 0.2, estimate: false}
+  FLEETS:
+    - {name: Comm, type: fishery, selectivity: s, catch_unit: biomass}
+    - {name: Surv, type: survey, selectivity: s}
+  LIKELIHOOD:
+    ldist: [Comm, Surv]
+    aldist: [Surv]
+    matp: [Surv]
+    ldist_bin: 2
+    aldist_length_bin: 10
+    age_groups: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    age_offset: false
+    indices:
+      - {name: Surv_SI, beta: 1}
+  DATA_LOOP: custom         # bait | mfdb | custom
