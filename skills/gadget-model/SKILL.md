@@ -4,12 +4,10 @@ description: Explain and apply how gadget3 models work — stocks, sub-stocks, a
 ---
 
 <!-- pack-resources:start -->
-**Pack resources:** resolve `gadget-wise` from `~/.gadget-wise/config.json` → `gadget_wise_path` (or
-`~/.fiskwise/config.json` → `components.gadget-wise.path`). If neither exists, use the checkout
-containing this skill, or locate/obtain the pack through its install instructions. Paths such as
-`knowledge/`, `config/`, `examples/` and `project-template/` belong to that repository, not the
-current model directory. Keep bundled `references/` links relative to the skill. Never assume
-`../../` from an agent's global skills folder reaches the repository. Use absolute resolved paths.
+**Pack resources:** the `gadget-wise` root is `~/.gadget-wise/config.json` → `gadget_wise_path`, else `~/.fiskwise/config.json` →
+`components.gadget-wise.path`, else the checkout containing this skill. Paths such as `knowledge/`
+and `project-template/` are relative to that root, never `../../` from a skills folder; resolve
+links that leave this skill's folder against the source skill there. Use absolute paths.
 <!-- pack-resources:end -->
 
 # How gadget3 works

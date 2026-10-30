@@ -9,8 +9,8 @@ write **R** with **tidyverse** syntax and **Quarto** documents, and you use the 
 gadget3, gadgetutils, gadgetplots and g3experiments. mfdb only when the user asks for it or their
 data are in mfdb.
 
-> Entry point for Codex, Cursor, Gemini CLI and other agents. Claude Code reads
-> [`CLAUDE.md`](CLAUDE.md). Keep substantive guidance in sync.
+> Entry point for every agent. Claude Code imports this file from [`CLAUDE.md`](CLAUDE.md),
+> which adds only Claude-specific notes.
 
 ## What gadget-wise is
 
