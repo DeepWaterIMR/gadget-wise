@@ -18,7 +18,8 @@ updated without touching the model.
 - Compositions: decide raw counts vs raised numbers (catch-sample raising) and document it; for
   surveys follow `biotic-survey-analysis` (true zeros, sampling units).
 - Survey indices for gadget usually come from a separate analysis: the **index-wise** assessment index
-  (`assessment-index.rds`, versioned with metadata) or a stratified index. Keep its provenance.
+  (`assessment-index.rds`, the [versioned hand-off](https://github.com/DeepWaterIMR/index-wise/blob/main/knowledge/assessment-index-handoff.md), read by `prepare_index()` in the
+  IMR template) or a stratified index. Keep its provenance.
 - Life-history starting values (growth, length-weight, maturity): estimate them in the data report,
   e.g. with ggFishPlots (`biotic-lifehistory`), and write `life_history.yaml`.
 - Check sample sizes per year-step; drop or merge years with too few fish and say so.

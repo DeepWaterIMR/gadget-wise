@@ -108,10 +108,19 @@ prepare_index <- function(model_params, out_dir) {
       next
     }
     idx <- readRDS(src)
-    # The index-wise handoff holds the selected index and its metadata; keep the provenance in the data report
-    tab <- if (is.data.frame(idx)) idx else idx$index
+    # index-wise handoff (schema 1): observations plus metadata; keep the provenance in the data report
+    if (is.data.frame(idx)) {
+      tab <- idx
+      value_col <- "weight"
+    } else if (identical(idx$schema_version, 1L)) {
+      tab <- idx$observations
+      value_col <- if (grepl("abundance", idx$metadata$index_type %||% "")) "number" else "weight"
+    } else {
+      stop(src, " is neither a data frame nor an index-wise schema 1 handoff")
+    }
     tab |>
-      dplyr::transmute(year, step = 1, area = names(areas)[1], weight = .data$est, lwr = .data$lwr, upr = .data$upr) |>
+      dplyr::transmute(year, step = si$step %||% 1, area = names(areas)[1], !!value_col := .data$est,
+                       lwr = .data$lwr, upr = .data$upr) |>
       readr::write_csv(file.path(out_dir, paste0("index_", si$name, ".csv")))
   }
   invisible()
