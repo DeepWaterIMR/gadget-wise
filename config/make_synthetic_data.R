@@ -12,7 +12,7 @@ make_synthetic_data <- function(config, out_dir, seed = 1) {
   set.seed(seed)
   txt <- readChar(config, file.info(config)$size, useBytes = TRUE)
   Encoding(txt) <- "UTF-8"
-  cfg <- yaml::yaml.load(txt)$MODEL
+  cfg <- yaml::yaml.load(txt, eval.expr = FALSE)$MODEL
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
   years <- seq(cfg$YEARS[[1]], cfg$YEARS[[2]])

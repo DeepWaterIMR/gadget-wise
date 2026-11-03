@@ -22,6 +22,16 @@ if (run_reweighting) previous_model_params_as_initial <- FALSE
 ## Output folder ####
 
 if (reset_model & dir.exists(base_dir)) {
+  # Guard before deleting: base_dir must be an earlier model run inside this project
+  project_dir <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
+  run_dir <- normalizePath(base_dir, winslash = "/", mustWork = TRUE)
+  if (nzchar(Sys.readlink(base_dir)) ||
+      !startsWith(run_dir, paste0(project_dir, "/")) ||
+      !file.exists(file.path(base_dir, "session", "sessionInfo.txt"))) {
+    stop("base_dir '", base_dir, "' is not a model run folder inside ", project_dir,
+         " (symlink, outside the project, or no session/sessionInfo.txt). Nothing was deleted.")
+  }
+
   prev_param_file <- file.path(base_dir, "optim/Optimized TMB parameters.csv")
   if (previous_model_params_as_initial & file.exists(prev_param_file)) {
     prev_param <- read.csv(prev_param_file) |>
@@ -32,7 +42,9 @@ if (reset_model & dir.exists(base_dir)) {
 
   if (!overwrite) {
     backup_base_dir <- paste0(base_dir, "_", format(file.info(base_dir)[, "ctime"], "%Y-%m-%d-%H-%M-%S"))
-    file.rename(base_dir, backup_base_dir)
+    if (!file.rename(base_dir, backup_base_dir)) {
+      stop("Could not move ", base_dir, " to ", backup_base_dir, ". Nothing was deleted.")
+    }
     message("The old base_dir was moved to ", backup_base_dir)
   }
   unlink(base_dir, recursive = TRUE)

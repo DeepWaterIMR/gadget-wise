@@ -3,7 +3,7 @@
 # 🐟 gadget-wise — Build gadget3 models with AI agents
 
 <!-- version -->
-**Version 0.1.4** (2026-10-30)
+**Version 0.1.5** (2026-11-03)
 <!-- /version -->
 
 This repository is part of [Fiskwise](https://github.com/DeepWaterIMR/fiskwise), with its [project hub](https://deepwaterimr.github.io/fiskwise/).

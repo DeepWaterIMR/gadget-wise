@@ -22,7 +22,7 @@ links that leave this skill's folder against the source skill there. Use absolut
 
 ## Run detached with a log
 
-IMR format, from the project root:
+IMR format, from the project root. Fill placeholders such as `<stock>`, `<project>` and `<base_dir>` with plain names (letters, digits, `_`, `-`, and `/` in paths); never paste user text containing quotes, `$`, `;` or backticks into these commands.
 
 ```bash
 mkdir -p logs

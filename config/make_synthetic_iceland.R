@@ -10,7 +10,7 @@ make_synthetic_iceland <- function(config, project, seed = 1) {
   make_synthetic_data(config, tmp, seed = seed)
   txt <- readChar(config, file.info(config)$size, useBytes = TRUE)
   Encoding(txt) <- "UTF-8"
-  m <- yaml::yaml.load(txt)$MODEL
+  m <- yaml::yaml.load(txt, eval.expr = FALSE)$MODEL
   rd <- function(f) readr::read_csv(file.path(tmp, f), show_col_types = FALSE)
   minl <- min(unlist(lapply(m$STOCKS, `[[`, "minlength")))
   maxl <- max(unlist(lapply(m$STOCKS, `[[`, "maxlength")))
@@ -25,7 +25,7 @@ make_synthetic_iceland <- function(config, project, seed = 1) {
   si <- rd("index_Surv_SI.csv")
   Surv.SI <- list(list(all = data.frame(year = si$year, step = 1, area = 1, weight = si$weight)))
 
-  lh <- yaml::read_yaml(file.path(tmp, "life_history.yaml"))
+  lh <- yaml::read_yaml(file.path(tmp, "life_history.yaml"), eval.expr = FALSE)
   lw.constants <- list(a = lh$walpha, b = lh$wbeta)
   init.cv <- rep(0.1, max(unlist(lapply(m$STOCKS, `[[`, "maxage"))))
   mat.l50 <- lh$mat_l50
