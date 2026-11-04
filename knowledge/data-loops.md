@@ -19,7 +19,11 @@ updated without touching the model.
   surveys follow `biotic-survey-analysis` (true zeros, sampling units).
 - Survey indices for gadget usually come from a separate analysis: the **index-wise** assessment index
   (`assessment-index.rds`, the [versioned hand-off](https://github.com/DeepWaterIMR/index-wise/blob/main/knowledge/assessment-index-handoff.md), read by `prepare_index()` in the
-  IMR template) or a stratified index. Keep its provenance.
+  IMR template) or a stratified index. Keep its provenance. Ask whether anomalous years were
+  checked with index-wise's [influence
+  diagnostics](https://github.com/DeepWaterIMR/index-wise/blob/main/knowledge/influence-diagnostics.md):
+  an AR1 index spreads a one-cruise coverage artefact into neighbouring years, which gadget then
+  fits as recruitment or growth.
 - Life-history starting values (growth, length-weight, maturity): estimate them in the data report,
   e.g. with ggFishPlots (`biotic-lifehistory`), and write `life_history.yaml`.
 - Check sample sizes per year-step; drop or merge years with too few fish and say so.
